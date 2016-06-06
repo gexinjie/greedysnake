@@ -11,15 +11,6 @@ _context = {'GRAPH': None, 'SNAKE': None, 'CONTROLLER': None, 'FRUIT': None, 'BG
 
 class GreedySnake:
     global _context
-    '''
-    def __init__(self, pos_x, pos_y, bg_length, bg_width, pat='o'):     # 方向是否合法交给controler控制
-        self.__len = 1                                                  # snake 需要知道背景大小, 不然碰到边框难以处理
-        self.__pat = pat
-        self.__head = point(pos_x, pos_y)
-        self.__body = [deepcopy(self.__head)]
-        self.__bg_wid = bg_width
-        self.__bg_len = bg_length
-    '''
 
     def __init__(self):
         self.__head = point(_context['SNAKE_START_FROM_X'], _context['SNAKE_START_FROM_Y'])
