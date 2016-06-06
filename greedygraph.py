@@ -1,6 +1,9 @@
 from point import point
 from copy import deepcopy
 from random import randrange
+import time
+import os
+from inputwithoutwait import getch
 class GreedySnake:
     def __init__(self, pos_x, pos_y, pat='o'):     # 方向是否合法交给controler控制
         self.__len = 1
@@ -67,17 +70,50 @@ class GreedyGraph:
                 print(pix, end='')
             print()
 
-class Controller:
+class DirectionError(Exception):
+    pass
+
+class GreedyController:
     direct = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}
     def __init__(self, the_snake, init_direction='right'):
         self.__cur_direction = init_direction
         self.__snake = the_snake
 
+    @property
+    def cur_direction(self):
+        return self.__cur_direction
+
+    @cur_direction.setter
+    def cur_direction(self, direction):
+        if direction not in GreedyController.direct.keys():
+            raise DirectionError
+        else:
+            self.__cur_direction = GreedyController.direct[direction]
+
     def turn(self, direction):
-        if Controller.direct[direction] == self.__cur_direction:
+        if GreedyController.direct[direction] == self.cur_direction:
             pass
         else:
-            if self.__cur_direction = Controller.direct[direction]
+            try:
+                self.cur_direction == Controller.direct[direction]
+            except DirectionError as e:
+                print(e, 'direcion should be in w,s,a,d')
+
+class GreedyApp:
+    def __init__(self, length, width):
+        self.__len = length
+        self.__wid = width
+        self.__graph = GreedyGraph(length, width)
+        self.__snake = GreedySnake(length//2, width//2)
+        self.__controller = GreedyController(self.__snake)
+
+    def run(self):
+        self.__graph.paint(self.__snake)
+        while True:
+
+            os.system('clear')
+
+
 
 
 
@@ -101,3 +137,6 @@ if __name__ == '__main__':
     print('-'*width)
     graph.paint(snake)
     print('-'*width)
+
+    controller = GreedyController(snake)
+
