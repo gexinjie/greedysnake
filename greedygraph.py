@@ -9,6 +9,11 @@ _context = {'GRAPH': None, 'SNAKE': None, 'CONTROLLER': None, 'FRUIT': None, 'BG
             'BG_AUTOFILL': None, 'SNAKE_INIT_DIRECTION': None, 'SNAKE_START_FROM_X': None, 'SNAKE_START_FROM_Y': None,
             'SNAKE_PAT': None, 'FRUIT_PAT': None}
 
+
+class DirectionError(Exception):
+    pass
+
+
 class GreedySnake:
     global _context
 
@@ -62,12 +67,6 @@ class GreedyFruit:
 class GreedyGraph:
     global _context
 
-    '''
-    def __init__(self, length=30, width=30, autofill=' '):
-        self.__len = length
-        self.__wid = width
-        self.__autofill = autofill
-    '''
     def __init__(self):
         self.__graph = None
 
@@ -83,14 +82,10 @@ class GreedyGraph:
                 pass                # (this happen before i have the dot moded)
                                     # the snake come to bottom after hit the ceiling!don't understand what heppened
                                     # just for now, i will edit it later
-
         for line in self.__graph:
             for pix in line:
                 print(pix, end='')
             print()
-
-class DirectionError(Exception):
-    pass
 
 
 class GreedyController:
@@ -134,6 +129,7 @@ class GreedyController:
                 pass
         GreedyController.snake_move[self.cur_direction]()
 
+
 class GreedyApp:
     global _context
 
@@ -148,8 +144,6 @@ class GreedyApp:
         _context['GRAPH'] = context.get('GRAPH', None) or GreedyGraph()
         _context['SNAKE'] = context.get('SNAKE', None) or GreedySnake()
         _context['CONTROLLER'] = context.get('CONTROLLER', None)or GreedyController()
-
-
         # _context['Fruit'] = context.get('FRUIT', None) or GreedyFruit()
 
     def run(self):
