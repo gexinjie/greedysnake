@@ -5,11 +5,13 @@ import time
 import os
 # from inputwithoutwait import getch    # getch don't work well on Pycharm
 class GreedySnake:
-    def __init__(self, pos_x, pos_y, pat='o'):     # 方向是否合法交给controler控制
-        self.__len = 1
+    def __init__(self, pos_x, pos_y, bg_length, bg_width, pat='o'):     # 方向是否合法交给controler控制
+        self.__len = 1                                                  # snake 需要知道背景大小, 不然碰到边框难以处理
         self.__pat = pat
         self.__head = point(pos_x, pos_y)
         self.__body = [deepcopy(self.__head)]
+        self.__bg_wid = bg_width
+        self.__bg_len = bg_length
 
     @property
     def pat(self):
@@ -25,21 +27,25 @@ class GreedySnake:
     def move_right(self):
         self.__body.pop()
         self.__head.y += 1
+        self.__head.y %= self.__bg_wid
         self.__body.append(deepcopy(self.__head))
 
     def move_left(self):
         self.__body.pop()
-        self.__head.y -= 1
+        self.__head.y += self.__bg_wid - 1      # equal to self.__head.y -= 1, but this way will produce negtive number
+        self.__head.y %= self.__bg_wid
         self.__body.append(deepcopy(self.__head))
 
     def move_up(self):
         self.__body.pop()
-        self.__head.x -= 1
+        self.__head.x +=  self.__bg_len - 1
+        self.__head.x %= self.__bg_len
         self.__body.append(deepcopy(self.__head))
 
     def move_down(self):
         self.__body.pop()
         self.__head.x += 1
+        self.__head.x %= self.__bg_len
         self.__body.append(deepcopy(self.__head))
 
     def __str__(self):
@@ -63,7 +69,10 @@ class GreedyGraph:
         assert isinstance(the_snake, GreedySnake), print('snake is needed!')
         snake_pat = the_snake.pat
         for p in the_snake.body:
-            self.__graph[p.x][p.y] = snake_pat
+            try:
+                self.__graph[p.x][p.y] = snake_pat
+            except IndexError as e: # a intersting thing happen!(this happen before i have the dot moded) the snake come to bottom after hit the ceiling! don't understand what heppened
+                pass    # just for now, i will edit it later
 
         for line in self.__graph:
             for pix in line:
@@ -95,21 +104,20 @@ class GreedyController:
 
     def turn(self, direction):
         if self.cur_direction == GreedyController.direct.get(direction, None):
-            GreedyController.snake_move[self.cur_direction]()
+            pass
         else:
             try:
                 self.cur_direction = GreedyController.direct[direction]
             except DirectionError as e:
-                print(e, 'direcion should be in w,s,a,d')
-            finally:
-                GreedyController.snake_move[self.cur_direction]()
+                pass
+        GreedyController.snake_move[self.cur_direction]()
 
 class GreedyApp:
     def __init__(self, length, width):
         self.__len = length
         self.__wid = width
         self.__graph = GreedyGraph(length, width)
-        self.__snake = GreedySnake(length//2, width//2)
+        self.__snake = GreedySnake(width//2, length//2, length, width)
         self.__controller = GreedyController(self.__snake)
 
     def run(self):
