@@ -125,13 +125,21 @@ class GreedyController:
         else:
             self.__cur_direction = direct
 
-    def turn(self, direction):      # direction could be 'w', 'a', 's', 'd', so interpret it to cur_direction
-        if self.cur_direction == GreedyController.direct.get(direction, None):
+    def turn(self, input_keys):
+        try:                            # input_key could be anything(still string)
+            direct_key = input_keys[0]  # while direct_key should be 'w', 'a', 's', 'd',
+        except IndexError as e:         # so interpret it to cur_direction
+            GreedyController.snake_move[self.cur_direction]()
+            return
+
+        if self.cur_direction == GreedyController.direct.get(direct_key, None):
             pass
         else:
             try:
-                self.cur_direction = GreedyController.direct[direction]
+                self.cur_direction = GreedyController.direct[direct_key]
             except DirectionError as e:
+                pass
+            except KeyError as e:   # when having key that unkown, not bother to change
                 pass
         GreedyController.snake_move[self.cur_direction]()
 
@@ -174,8 +182,8 @@ class GreedyApp:
         the_graph.paint()
         while True:
             # input_key = getch()
-            input_key = input()
-            the_controller.turn(input_key[0])
+            input_str = input()
+            the_controller.turn(input_str)
             os.system('clear')
             the_graph.paint()
 
