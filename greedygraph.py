@@ -144,20 +144,6 @@ class GreedyController:
         GreedyController.snake_move[self.cur_direction]()
 
 class GreedyApp:
-    '''
-    def __init__(self, the_graph=None, the_controller=None, the_snake=None, the_fruit=None): # !fruit未完成
-        context['GRAPH'] = the_graph or GreedyGraph()
-        context['SNAKE'] = the_snake or GreedySnake()
-        context['CONTROLLER'] = the_controller or GreedyController()
-        # context['Fruit'] = the_fruit or GreedyFruit()
-
-        self.__len = length
-        self.__wid = width
-        self.__graph = GreedyGraph(length, width)
-        self.__snake = GreedySnake(width//2, length//2, length, width)
-        self.__controller = GreedyController(self.__snake)
-
-    '''
     global _context
 
     def __init__(self, context={}):  # !fruit未完成
