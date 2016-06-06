@@ -6,7 +6,8 @@ import os
 # from inputwithoutwait import getch    # getch don't work well on Pycharm
 
 _context = {'GRAPH': None, 'SNAKE': None, 'CONTROLLER': None, 'FRUIT': None, 'BG_LEN': None, 'BG_WID': None,
-            'SNAKE_START_FROM_X': None, 'SNAKE_START_FROM_Y': None, 'SNAKE_PAT': None, 'FRUIT_PAT': None}
+            'BG_AUTOFILL': None, 'SNAKE_START_FROM_X': None, 'SNAKE_START_FROM_Y': None, 'SNAKE_PAT': None,
+            'FRUIT_PAT': None}
 
 class GreedySnake:
     '''
@@ -19,6 +20,7 @@ class GreedySnake:
         self.__bg_len = bg_length
     '''
     global _context
+
     def __init__(self):
         self.__head = point(_context['SNAKE_START_FROM_X'], _context['SNAKE_START_FROM_Y'])
         self.__len = 1
@@ -39,13 +41,13 @@ class GreedySnake:
 
     def move_left(self):
         self.__body.pop()
-        self.__head.y += self._context['BG_WID'] - 1      # equal to self.__head.y -= 1, but this way will produce negtive number
-        self.__head.y %= self._context['BG_WID']
+        self.__head.y += self._context['BG_WID'] - 1   # equal to self.__head.y -= 1,
+        self.__head.y %= self._context['BG_WID']       # but this way will produce negative number
         self.__body.append(deepcopy(self.__head))
 
     def move_up(self):
         self.__body.pop()
-        self.__head.x +=  self._context['BG_LEN'] - 1
+        self.__head.x += self._context['BG_LEN'] - 1
         self.__head.x %= self._context['BG_LEN']
         self.__body.append(deepcopy(self.__head))
 
@@ -65,7 +67,9 @@ class GreedyFruit:
     def __init__(self):
         return None
 
+
 class GreedyGraph:
+    global _context
     def __init__(self, length=30, width=30, autofill=' '):
         self.__len = length
         self.__wid = width
@@ -88,6 +92,7 @@ class GreedyGraph:
 
 class DirectionError(Exception):
     pass
+
 
 class GreedyController:
     direct = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}
@@ -134,13 +139,15 @@ class GreedyApp:
         self.__controller = GreedyController(self.__snake)
 
     '''
+    global _context
 
-    def __init__(self, context):  # !fruit未完成
+    def __init__(self, context={}):  # !fruit未完成
         _context['GRAPH'] = context.get('GRAPH', None) or GreedyGraph()
         _context['SNAKE'] = context.get('SNAKE', None) or GreedySnake()
         _context['CONTROLLER'] = context.get['CONTROLLER', None] or GreedyController()
         _context['BG_LEN'] = context.get('BG_LEN', None) or 30
         _context['BG_WID'] = context.get('BG_WID', None) or 30
+        _context['BG_AUTOFILL'] = context.get('BG_AUTOFILL', None) or ' '
         _context['SNAKE_START_FROM_X'] = context.get('SNAKE_START_FROM_X', None) or _context['BG_WID']//2
         _context['SNAKE_START_FROM_Y'] = context.get('SNAKE_START_FROM_Y', None) or _context['BG_LEN']//2
         _context['SNAKE_PAT'] = context.get('SNAKE_PAT', None) or 'o'
@@ -155,8 +162,6 @@ class GreedyApp:
             self.__controller.turn(input_key[0])
             os.system('clear')
             self.__graph.paint(self.__snake)
-
-
 
 
 if __name__ == '__main__':
@@ -183,7 +188,7 @@ if __name__ == '__main__':
 
     controller = GreedyController(snake)
     """
-    app = GreedyApp(30, 30)
+    app = GreedyApp()
     # app.run()
 
 
