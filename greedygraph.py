@@ -95,7 +95,7 @@ class GreedyController:
             pass
         else:
             try:
-                self.cur_direction == Controller.direct[direction]
+                self.cur_direction == GreedyGraph.direct[direction]
             except DirectionError as e:
                 print(e, 'direcion should be in w,s,a,d')
 
