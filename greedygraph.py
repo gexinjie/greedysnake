@@ -59,9 +59,19 @@ class GreedySnake:
             body += str(point)
         return body
 
+
 class GreedyFruit:
+    global _context
+
     def __init__(self):
-        return None
+        self.__pos = point(randrange(_context['BG_WID']), randrange(['BG_LEN']))
+
+    @property
+    def pos(self):
+        return self.__pos
+
+    def flush(self):
+        self.__pos = point(randrange(_context['BG_WID']), randrange(['BG_LEN']))
 
 
 class GreedyGraph:
@@ -78,10 +88,10 @@ class GreedyGraph:
         for p in the_snake.body:
             try:
                 self.__graph[p.x][p.y] = snake_pat
-            except IndexError as e: # a intersting thing happen!
-                pass                # (this happen before i have the dot moded)
-                                    # the snake come to bottom after hit the ceiling!don't understand what heppened
-                                    # just for now, i will edit it later
+            except IndexError as e:  # a interesting thing happen!
+                pass                 # (this happen before i have the dot moded)
+                                     # the snake come to bottom after hit the ceiling!don't understand what heppened
+                                     # just for now, i will edit it later
         for line in self.__graph:
             for pix in line:
                 print(pix, end='')
@@ -125,7 +135,7 @@ class GreedyController:
                 self.cur_direction = GreedyController.direct[direct_key]
             except DirectionError as e:
                 pass
-            except KeyError as e:   # when having key that unkown, not bother to change
+            except KeyError as e:   # when having key that unknown, not bother to change
                 pass
         GreedyController.snake_move[self.cur_direction]()
 
@@ -148,7 +158,7 @@ class GreedyApp:
 
     def run(self):
         the_graph = _context['GRAPH']
-        the_snake = _context['SNAKE']
+        # the_snake = _context['SNAKE']
         the_controller = _context['CONTROLLER']
         the_graph.paint()
         while True:
