@@ -185,3 +185,7 @@ if __name__ == '__main__':
     """
     app = GreedyApp(30, 30)
     # app.run()
+
+
+    print('i just want to use git')
+    print('please change')
