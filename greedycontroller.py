@@ -1,6 +1,7 @@
 from greedycontext import _context
 from greedyexception import DirectionError
 from greedyitem import GreedySnake, GreedyFruit
+from greedyexception import DieError
 
 
 class GreedyController:
@@ -53,3 +54,8 @@ class GreedyController:
 
     def check_over(self):   # to see whether the snake hit itself
         the_snake = _context['SNAKE']
+        snake_real_body = the_snake.body[:-1]       # real means except the head
+        for p in snake_real_body:
+            if p == the_snake.head_pos:
+                raise DieError
+
