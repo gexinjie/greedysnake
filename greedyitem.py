@@ -1,6 +1,7 @@
 from greedyapp import _context
 from point import point
 from copy import deepcopy
+from random import randrange
 
 class GreedySnake:
     def __init__(self):
@@ -11,6 +12,10 @@ class GreedySnake:
     @property
     def body(self):
         return self.__body
+
+    @property
+    def head_pos(self):
+        return self.__head
 
     def grow(self):    # !need to grow before take step
         self.__body.insert(0, deepcopy(self.__body[0]))

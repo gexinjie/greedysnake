@@ -64,6 +64,8 @@ class point:
     def __str__(self):
         return 'point({}, {})'.format(self.x, self.y)
 
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
 
 if __name__ == '__main__':
     p = point(1, 2)

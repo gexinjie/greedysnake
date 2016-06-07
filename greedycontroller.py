@@ -41,3 +41,11 @@ class GreedyController:
             except KeyError as e:   # when having key that unknown, not bother to change
                 pass
         GreedyController.snake_move[self.cur_direction]()
+
+    def check_eat(self):
+        the_fruits = _context['FRUITS']
+        the_snake = _context['SNAKE']
+        for fruit in the_fruits:
+            if fruit.pos == the_snake.head_pos:
+                the_snake.grow()
+                fruit.flush()
