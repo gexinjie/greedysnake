@@ -50,3 +50,6 @@ class GreedyController:
             if fruit.pos == the_snake.head_pos:
                 the_snake.grow()
                 fruit.flush()
+
+    def check_over(self):   # to see whether the snake hit itself
+        the_snake = _context['SNAKE']
