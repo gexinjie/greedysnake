@@ -15,7 +15,6 @@ class DirectionError(Exception):
 
 
 class GreedySnake:
-    global _context
 
     def __init__(self):
         self.__head = point(_context['SNAKE_START_FROM_X'], _context['SNAKE_START_FROM_Y'])
@@ -154,7 +153,7 @@ class GreedyApp:
         _context['GRAPH'] = context.get('GRAPH', None) or GreedyGraph()
         _context['SNAKE'] = context.get('SNAKE', None) or GreedySnake()
         _context['CONTROLLER'] = context.get('CONTROLLER', None)or GreedyController()
-        # _context['Fruit'] = context.get('FRUIT', None) or GreedyFruit()
+        _context['Fruit'] = context.get('FRUIT', None) or GreedyFruit()
 
     def run(self):
         the_graph = _context['GRAPH']
