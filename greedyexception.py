@@ -1,0 +1,2 @@
+class DirectionError(Exception):
+    pass
