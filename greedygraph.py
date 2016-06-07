@@ -1,5 +1,5 @@
 from greedyitem import GreedySnake
-from greedyapp import _context
+from greedycontext import _context
 
 class GreedyGraph:
     def __init__(self):
@@ -20,7 +20,7 @@ class GreedyGraph:
                                      # just for now, i will edit it later
         for fruit in the_fruits:
             p = fruit.pos
-            self.__graph[p.x, p.y] = fruit_pat
+            self.__graph[p.x][p.y] = fruit_pat
 
         for line in self.__graph:
             for pix in line:

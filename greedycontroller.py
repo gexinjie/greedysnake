@@ -1,6 +1,7 @@
-from greedyapp import _context
+from greedycontext import _context
 from greedyexception import DirectionError
 from greedyitem import GreedySnake, GreedyFruit
+
 
 class GreedyController:
     direct = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}

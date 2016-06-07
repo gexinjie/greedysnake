@@ -1,4 +1,4 @@
-from greedyapp import _context
+from greedycontext import _context
 from point import point
 from copy import deepcopy
 from random import randrange
@@ -53,11 +53,11 @@ class GreedySnake:
 
 class GreedyFruit:
     def __init__(self):
-        self.__pos = point(randrange(_context['BG_WID']), randrange(['BG_LEN']))
+        self.__pos = point(randrange(_context['BG_WID']), randrange(_context['BG_LEN']))
 
     @property
     def pos(self):
         return self.__pos
 
     def flush(self):
-        self.__pos = point(randrange(_context['BG_WID']), randrange(['BG_LEN']))
+        self.__pos = point(randrange(_context['BG_WID']), randrange(_context['BG_LEN']))

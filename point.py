@@ -19,10 +19,6 @@ class point:
     def y(self, y):
         self.__y = y
 
-    @property
-    def pat(self):
-        return self.__pat
-
     def __add__(self, other):
         return point(self.x+other.x, self.y+other.y)
 
