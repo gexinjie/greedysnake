@@ -6,6 +6,7 @@ from greedyexception import DieError
 
 class GreedyController:
     direct = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}
+    reverse_direct = {'up': 'down', 'down': 'up', 'left': 'right', 'right': 'left'}
     snake_move = {}
 
     def __init__(self):
@@ -32,8 +33,8 @@ class GreedyController:
         except IndexError as e:         # so interpret it to cur_direction
             GreedyController.snake_move[self.cur_direction]()
             return
-
-        if self.cur_direction == GreedyController.direct.get(direct_key, None):
+        input_direct = GreedyController.direct.get(direct_key)    # could be None
+        if self.cur_direction == input_direct or self.cur_direction ==GreedyController.reverse_direct.get(input_direct):
             pass
         else:
             try:
@@ -51,6 +52,8 @@ class GreedyController:
             if fruit.pos == the_snake.head_pos:
                 the_snake.grow()
                 fruit.flush()
+            return True
+        return False
 
     def check_over(self):   # to see whether the snake hit itself
         the_snake = _context['SNAKE']
@@ -59,3 +62,6 @@ class GreedyController:
             if p == the_snake.head_pos:
                 raise DieError
 
+    def check(self):
+        if not self.check_eat():
+            self.check_over()
